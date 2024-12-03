@@ -1,91 +1,57 @@
 import { StatusBar } from 'expo-status-bar';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, Button, View, ScrollView } from 'react-native';
+import { getRequest } from './Api';
+import HomeScreen from './Telas/Taskcard';
 
 export default function App() {
+
+  const [livro, setLivro] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const resp = await getRequest();
+        setLivro(resp)
+
+      } catch (ex) {
+        console.error(ex)
+      }
+    };
+
+    fetchData();
+
+  }, [])
 
   return (
 
     <View style={styles.container}>
-      
+
       <View style={styles.cabeçalho}>
-            <text>
-              BIBLIOTECA
-            </text>
+        <text>
+          BIBLIOTECA
+        </text>
       </View>
-      
+
 
 
       <ScrollView>
-        
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
 
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
+        {
+          livro.map((item, index) => (
+            <HomeScreen
+              key={item.id}
+              name={item.name}
+              autor={item.autor}
+              quantidade={item.quantidade}
+              status={"Done"}
+              onClick={() => {
+                
+              }}
+            />
+          ))
+        }
 
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
-        <View style={styles.buttonContainer}>
-          <Button
-            title='Outro livro'
-            color='red'
-            onPress={() => onMessage()} />
-        </View>
 
       </ScrollView>
     </View>
