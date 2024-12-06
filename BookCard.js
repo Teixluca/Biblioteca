@@ -1,9 +1,10 @@
 import { CircleCheck } from "lucide-react-native";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { router } from "expo-router";
 
-const HomeScreen = ({ name, autor, quantidade, status, onClick }) => {
+const BookCard = ({ id, name, autor, quantidade, status }) => {
 
     if (quantidade > 0){
         status = "Done"
@@ -22,13 +23,15 @@ const HomeScreen = ({ name, autor, quantidade, status, onClick }) => {
             <Text style={styles.description}>{autor}</Text>
             <Text style={styles.description}>{quantidade}</Text>
 
-            <TouchableOpacity
-                style={styles.button}
-                onPress={onClick}>
-                <Text style={styles.buttonText}>
-                    {status === "Done" ? "Alugar" : "Devolver"}
-                </Text>
-            </TouchableOpacity>
+            <Pressable onPress={() => (
+                router.push({
+                    pathname: "books/[id]",
+                    params: {id: id}
+                })
+            )}>
+                <Text> go to page Book</Text>
+
+            </Pressable>
         </View>
     )
 }
@@ -84,4 +87,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomeScreen
+export default BookCard

@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, Button, View, ScrollView } from 'react-native';
-import { getRequest } from './Api';
-import HomeScreen from './Telas/Taskcard';
+
+import { getRequest } from '../Api';
+import BookCard from '../BookCard';
 
 export default function App() {
 
@@ -28,9 +29,9 @@ export default function App() {
     <View style={styles.container}>
 
       <View style={styles.cabeçalho}>
-        <text>
+        <Text>
           BIBLIOTECA
-        </text>
+        </Text>
       </View>
 
 
@@ -39,8 +40,9 @@ export default function App() {
 
         {
           livro.map((item, index) => (
-            <HomeScreen
+            <BookCard
               key={item.id}
+              id={item.id}
               name={item.name}
               autor={item.autor}
               quantidade={item.quantidade}
