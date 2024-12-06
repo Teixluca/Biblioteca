@@ -48,7 +48,7 @@ export default function App() {
               quantidade={item.quantidade}
               status={"Done"}
               onClick={() => {
-                
+
               }}
             />
           ))
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
 
   cabeçalho: {
     flex: 1,
-    backgroundColor: 'lightred',
+    backgroundColor: 'red',
     padding: 16,
     textAlign: "center"
   },

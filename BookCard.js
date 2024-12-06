@@ -6,11 +6,6 @@ import { router } from "expo-router";
 
 const BookCard = ({ id, name, autor, quantidade, status }) => {
 
-    if (quantidade > 0){
-        status = "Done"
-    } else {
-        status = ""
-    }
     return (
         <View style={styles.card}>
             <View style={styles.header}>
@@ -29,7 +24,7 @@ const BookCard = ({ id, name, autor, quantidade, status }) => {
                     params: {id: id}
                 })
             )}>
-                <Text> go to page Book</Text>
+                <Text style={styles.card}> Alugar</Text>
 
             </Pressable>
         </View>
