@@ -1,10 +1,10 @@
 import { router } from "expo-router"
 
 import { useEffect, useState } from "react";
-import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
+import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
 import { getRequestId } from "../../Api";
 import { useLocalSearchParams, useSearchParams } from "expo-router/build/hooks";
-import { CircleCheck } from "lucide-react-native";
+import { Bluetooth, CircleCheck } from "lucide-react-native";
 
 
 export default function BookPage() {
@@ -12,10 +12,12 @@ export default function BookPage() {
     const [clienteNome, setNome] = useState("");
     const [clienteEmail, setEmail] = useState("");
 
+
+
     const { id } = useLocalSearchParams();
     console.log("Book page", id);
-    const [livro, setLivro] = useState({});
 
+    const [livro, setLivro] = useState({});
 
     useEffect(() => {
         async function fetchData() {
@@ -38,24 +40,41 @@ export default function BookPage() {
         <ScrollView>
             <View style={styles.container}>
 
+                <View style={styles.card}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Nome completo'
+                        value={clienteNome}
+                        onChangeText={setNome}
+                    />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Nome completo'
-                    value={clienteNome}
-                    onChangeText={setNome}
-                />
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Email'
+                        value={clienteEmail}
+                        onChangeText={setEmail}
+                    />
+                    <Button
+                        title='Alugar'
+                        color='lightblue'
+                        // falta colocar a funcao para diminuir a quantidade
+                        onPress={() => livro.quantidade = livro.quaitidade--} />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder='Email'
-                    value={clienteEmail}
-                    onChangeText={setEmail}
-                />
+                    <Button
+                        title='Devolver'
+                        color='lightblue'
 
+                        onPress={() => livro.quantidade++}
+                        // fata colocar a quantidade
+                        />
+
+                    
+
+                </View>
 
                 <View style={styles.card}>
                     <Text>Id: {livro.id}</Text>
+                    <Text style={styles.description}>Id: <Text style={styles.title}>{livro.id}</Text></Text>
                     <Text style={styles.description}><Text style={styles.title}>{livro.name}</Text></Text>
                     <Text style={styles.description}>Autor: <Text style={styles.title}>{livro.autor}</Text></Text>
                     <Text style={styles.description}>Lançamento: <Text style={styles.title}>{livro.ano}</Text></Text>
@@ -75,11 +94,12 @@ export default function BookPage() {
                 <View style={styles.botaoVoltar} >
 
                     <Pressable onPress={() => (
+
                         router.push({
                             pathname: "/",
                         })
                     )}>
-                        <Text> Voltar </Text>
+                        <Text style={styles.botaoVoltar} > Voltar </Text>
 
                     </Pressable>
 
@@ -106,8 +126,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        marginVertical: 0.1
+        marginVertical: 5
     },
+    
     description: {
         fontSize: 12,
         color: '#666',
@@ -123,12 +144,16 @@ const styles = StyleSheet.create({
     },
 
     botaoVoltar: {
-        fontSize: 22,
+        fontSize: 17,
+        borderWidth: 1,
+        borderRadius: 8,
         fontWeight: 'bold',
-        color: '#333',
-        justifyContent: 'flex-end'
-
+        color: 'green',
+        backgroundColor: 'lightblue',
+        width: 66,
+        height: 30,
     },
+
     label: {
         fontSize: 12,
         fontWeight: 'bold',

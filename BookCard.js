@@ -1,18 +1,20 @@
-import { CircleCheck } from "lucide-react-native";
+import { BookmarkCheck } from "lucide-react-native";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { router } from "expo-router";
 
 const BookCard = ({ id, name, autor, quantidade, status }) => {
-
+        
     return (
+            
+        
         <View style={styles.card}>
             <View style={styles.header}>
                 <Text style={styles.title}>
                     {name}
                 </Text>
-                <CircleCheck color={'green'} size={32} />
+                <BookmarkCheck   color={'green'} size={32} />
             </View>
 
             <Text style={styles.description}>{autor}</Text>
