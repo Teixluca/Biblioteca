@@ -28,7 +28,7 @@ export default function App() {
 
     <View style={styles.container}>
 
-      <View style={styles.cabeçalho}>
+      <View style={styles.header}>
         <Text>
           BIBLIOTECA
         </Text>
@@ -45,11 +45,7 @@ export default function App() {
               id={item.id}
               name={item.name}
               autor={item.autor}
-              quantidade={item.quantidade}
-              status={"Done"}
-              onClick={() => {
-
-              }}
+              quantidade={`Qtd: ${item.quantidade}`}
             />
           ))
         }
@@ -64,26 +60,27 @@ export default function App() {
 const styles = StyleSheet.create({
 
   container: {
-    flex: 3,
-    backgroundColor: '#fff',
-    alignItems: 'right',
+    flex: 1,
+    backgroundColor: 'silver',
+    alignItems: 'left',
     justifyContent: 'top',
   },
 
   caixa: {
-    backgroundColor: "red",
+    backgroundColor: "grey",
     padding: 15,
     borderRadius: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowRadius: 10,
     elevation: 3,
     marginVertical: 10
   },
 
   cabeçalho: {
+    justifyContent: 'flex-start',
     flex: 1,
-    backgroundColor: 'red',
+    backgroundColor: 'silver',
     padding: 16,
     textAlign: "center"
   },
@@ -100,11 +97,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: 5,
+    shadowRadius: 20,
     elevation: 3,
     marginVertical: 10
 
   },
+  
 
 
 });

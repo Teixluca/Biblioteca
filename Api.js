@@ -44,7 +44,7 @@ export const getRequestId = async (id) => {
         }
 
         const textData = await response.text();
-        const data = JSON.stringify(textData);
+        const data = JSON.parse(textData);
 
         return data;
 

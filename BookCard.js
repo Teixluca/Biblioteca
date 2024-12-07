@@ -24,9 +24,10 @@ const BookCard = ({ id, name, autor, quantidade, status }) => {
                     params: { id: id }
                 })
             )}>
-                <Text style={styles.button}> Alugar</Text>
+                <Text style={styles.button}> DETALHES</Text>
 
             </Pressable>
+
         </View>
     )
 }
@@ -34,13 +35,13 @@ const BookCard = ({ id, name, autor, quantidade, status }) => {
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
-        padding: 15,
+        padding: 12,
         borderRadius: 10,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowRadius: 5,
-        elevation: 3,
-        marginVertical: 10
+        elevation: 6,
+        marginVertical: 5
     },
 
     header: {
@@ -71,14 +72,20 @@ const styles = StyleSheet.create({
 
     button: {
         backgroundColor: '#d33f49',
-        paddingVertical: 10,
+        paddingVertical: 5,
+        padding: 1,
         borderRadius: 6,
-        alignItems: 'center'
+        alignItems: 'center',
+        color: '#fff',
+        fontSize: 12,
+        fontWeight: 'bold',
     },
+
     buttonText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        alignItems: 'center'
     }
 })
 
