@@ -1,22 +1,25 @@
 import { router } from "expo-router"
-import { useSearchParams } from "expo-router/build/hooks"
+
 import { useEffect, useState } from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native"
-import { getRequest, postRequest } from "../../Api";
-import BookCard from "../../BookCard";
+import { Pressable, StyleSheet, Text, View } from "react-native"
+import { getRequestId } from "../../Api";
+import { useLocalSearchParams, useSearchParams } from "expo-router/build/hooks";
+
 
 export default function BookPage() {
 
-    const { id } = useSearchParams()
-
+    const { id } = useLocalSearchParams()
+    console.log("Book page",id)
     const [livro, setLivro] = useState({});
 
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const resp = await getRequestId();
+                console.log(id)
+                const resp = await getRequestId(id);
                 setLivro(resp);
+                console.log(resp)
 
             } catch (ex) {
                 console.error(ex);
@@ -33,6 +36,7 @@ export default function BookPage() {
 
             <View style={styles.card}>
 
+                <Text style={styles.description}>{livro.id}</Text>
                 <Text style={styles.description}>{livro.nome}</Text>
                 <Text style={styles.description}>{livro.autor}</Text>
                 <Text style={styles.description}>{livro.quantidade}</Text>

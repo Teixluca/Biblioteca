@@ -28,10 +28,11 @@ export const getRequest = async () => {
     }
 }
 
-export const getRequestId = async ([]) => {
+export const getRequestId = async (id) => {
     try {
         // executa o comando
-        const response = await fetch(BASE_URL, {
+        const response = await fetch(`${BASE_URL}/${id}`, {
+            
             method: "GET",
             headers: {
                 'Content-Type': 'application/json'
@@ -43,7 +44,7 @@ export const getRequestId = async ([]) => {
         }
 
         const textData = await response.text();
-        const data = JSON.parse(textData);
+        const data = JSON.stringify(textData);
 
         return data;
 

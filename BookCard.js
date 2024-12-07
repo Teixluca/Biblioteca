@@ -21,10 +21,10 @@ const BookCard = ({ id, name, autor, quantidade, status }) => {
             <Pressable onPress={() => (
                 router.push({
                     pathname: "books/[id]",
-                    params: {id: id}
+                    params: { id: id }
                 })
             )}>
-                <Text style={styles.card}> Alugar</Text>
+                <Text style={styles.button}> Alugar</Text>
 
             </Pressable>
         </View>
