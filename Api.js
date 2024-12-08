@@ -56,35 +56,21 @@ export const getRequestId = async (id) => {
     }
 }
 
-export const postRequest = async (name, autor, quantidade) => {
+export const postRequest = async (id) => {
     try {
-
-
-        let myBody = {
-            id: 0,
-            name: name,
-            autor: autor,
-            quantidade: quantidade
-
-        }
-
-        const response = await fetch(BASE_URL, {
+        const response = await fetch(`${BASE_URL}/aluga/${id}`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
-            body: JSON.stringify(myBody)
         });
 
-
         if (!response.ok) {
-            throw new Error("Post Failed !!!")
+            throw new Error("Erro ao alugar o livro");
         }
 
-
-        const textData = await response.text();
-        return JSON.stringify(textData);
-
+        const jsonData = await response.json();
+        return jsonData;
 
     } catch (error) {
         console.error(error);
@@ -92,3 +78,24 @@ export const postRequest = async (name, autor, quantidade) => {
     }
 };
 
+export const postRequestDevolve = async (id) => {
+    try {
+        const response = await fetch(`${BASE_URL}/devolve/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("Erro ao alugar o livro");
+        }
+
+        const jsonData = await response.json();
+        return jsonData;
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};

@@ -2,7 +2,7 @@ import { router } from "expo-router"
 
 import { useEffect, useState } from "react";
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
-import { getRequestId } from "../../Api";
+import { getRequestId, postRequest, postRequestDevolve } from "../../Api";
 import { useLocalSearchParams, useSearchParams } from "expo-router/build/hooks";
 import { Bluetooth, CircleCheck } from "lucide-react-native";
 
@@ -18,6 +18,7 @@ export default function BookPage() {
     console.log("Book page", id);
 
     const [livro, setLivro] = useState({});
+   
 
     useEffect(() => {
         async function fetchData() {
@@ -35,6 +36,26 @@ export default function BookPage() {
         fetchData();
 
     }, [id])
+
+
+    const Alugar = async () => {
+        try {
+            const response = await postRequest(id); // Faz a requisição para alugar o livro
+            console.log("Livro alugado com sucesso:", response);
+        } catch (error) {
+            console.error("Erro ao alugar o livro:", error);
+        }
+    };
+
+     const Devolver = async () => {
+        try {
+            const response = await postRequestDevolve(id); // Faz a requisição para alugar o livro
+            console.log("Livro alugado com sucesso:", response);
+        } catch (error) {
+            console.error("Erro ao alugar o livro:", error);
+        }
+    };
+
 
     return (
         <ScrollView>
@@ -58,13 +79,12 @@ export default function BookPage() {
                         title='Alugar'
                         color='lightblue'
                         // falta colocar a funcao para diminuir a quantidade
-                        onPress={() => livro.quantidade = livro.quaitidade--} />
-
+                        onPress={Alugar}/>
                     <Button
                         title='Devolver'
                         color='lightblue'
 
-                        onPress={() => livro.quantidade++}
+                        onPress={Devolver}
                         // fata colocar a quantidade
                         />
 
@@ -73,7 +93,7 @@ export default function BookPage() {
                 </View>
 
                 <View style={styles.card}>
-                    <Text>Id: {livro.id}</Text>
+
                     <Text style={styles.description}>Id: <Text style={styles.title}>{livro.id}</Text></Text>
                     <Text style={styles.description}><Text style={styles.title}>{livro.name}</Text></Text>
                     <Text style={styles.description}>Autor: <Text style={styles.title}>{livro.autor}</Text></Text>
