@@ -12,18 +12,19 @@ export default function BookPage() {
     const [clienteNome, setNome] = useState("");
     const [clienteEmail, setEmail] = useState("");
 
-
+    const [alert1, setAlert1] = useState(false);
+    const [alert2, setAlert2] = useState(false);
 
     const { id } = useLocalSearchParams();
-    console.log("Book page", id);
 
     const [livro, setLivro] = useState({});
-   
 
+
+    // Não faço ideia mas precisa pra mostrar o livro
     useEffect(() => {
         async function fetchData() {
             try {
-                console.log(id)
+
                 const resp = await getRequestId(id);
                 setLivro(resp);
                 console.log(resp);
@@ -38,23 +39,65 @@ export default function BookPage() {
     }, [id])
 
 
+
+
+    // funcao para alugar livro (API)
     const Alugar = async () => {
         try {
-            const response = await postRequest(id); // Faz a requisição para alugar o livro
-            console.log("Livro alugado com sucesso:", response);
+            const response = await postRequest(id); // chama API pra alugar
         } catch (error) {
-            console.error("Erro ao alugar o livro:", error);
+            console.error(error);
         }
     };
 
-     const Devolver = async () => {
+
+
+    // funcao para devolver livro (API)
+    const Devolver = async () => {
         try {
-            const response = await postRequestDevolve(id); // Faz a requisição para alugar o livro
-            console.log("Livro alugado com sucesso:", response);
+            const response = await postRequestDevolve(id); // chama API pra devolver            console.log("Livro alugado com sucesso:", response);
         } catch (error) {
-            console.error("Erro ao alugar o livro:", error);
+            console.error(error);
         }
     };
+
+
+
+    // mensagem de quando aluga o livro
+
+    const onMessage = () => {
+
+        if (Alugar()) {
+            setAlert2(true)
+            setTimeout(() => {
+                setAlert2(false);
+            }, 4000);
+        }
+        if (Devolver()) {
+
+            setAlert1(true)
+            setTimeout(() => {
+                setAlert1(false);
+            }, 4000);
+        }
+    }
+
+
+
+    // acoes do botao de alugar
+
+    const botaoAlugar = () => {
+
+        onMessage()
+        Alugar()
+    }
+
+
+    const botaoDevolver = () => {
+
+        onMessage()
+        Devolver()
+    }
 
 
     return (
@@ -77,20 +120,38 @@ export default function BookPage() {
                     />
                     <Button
                         title='Alugar'
-                        color='lightblue'
-                        // falta colocar a funcao para diminuir a quantidade
-                        onPress={Alugar}/>
+                        color='blue'
+
+                        onPress={() => botaoAlugar()}
+
+
+                    />
+
+                    {alert1 ? <Text style={styles.errorText}>
+                        Livro Alugado para {clienteNome}
+                    </Text>
+                        : <></>}
+
+
+
+
+
                     <Button
                         title='Devolver'
                         color='lightblue'
+                        onPress={() => botaoDevolver()}
+                    // fata colocar a quantidade
+                    />
 
-                        onPress={Devolver}
-                        // fata colocar a quantidade
-                        />
+                    {alert2 ? <Text style={styles.errorText}>
+                        Livro Devovido por {clienteNome}
+                    </Text>
+                        : <></>}
 
-                    
+
 
                 </View>
+
 
                 <View style={styles.card}>
 
@@ -118,6 +179,7 @@ export default function BookPage() {
                         router.push({
                             pathname: "/",
                         })
+
                     )}>
                         <Text style={styles.botaoVoltar} > Voltar </Text>
 
@@ -128,12 +190,16 @@ export default function BookPage() {
 
             </View>
         </ScrollView>
+
+
     )
 }
 
+
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 22,
         padding: 24,
         backgroundColor: '#eaeaea'
     },
@@ -148,7 +214,7 @@ const styles = StyleSheet.create({
         elevation: 3,
         marginVertical: 5
     },
-    
+
     description: {
         fontSize: 12,
         color: '#666',
@@ -190,5 +256,11 @@ const styles = StyleSheet.create({
     textArea: {
         height: 150,
         textAlignVertical: 'top'
+    },
+
+    errorText: {
+        color: "darkgreen",
+        fontSize: 12,
+        fontStyle: "italic"
     },
 })
