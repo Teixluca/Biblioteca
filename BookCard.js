@@ -18,14 +18,15 @@ const BookCard = ({ id, name, autor, quantidade }) => {
                 </Text>
 
 
-                {quantidade === 0 ? <BookmarkCheck color={'red'} size={32} />
+                {quantidade == 0 ?
+                 <BookmarkCheck color={'red'} size={32} />
                     : <BookmarkCheck color={'green'} size={32} />}
 
 
             </View>
 
             <Text style={styles.description}>{autor}</Text>
-            <Text style={styles.description}>{quantidade}</Text>
+            <Text style={styles.description}>qtd: {quantidade}</Text>
 
             <Pressable onPress={() => (
                 router.push({

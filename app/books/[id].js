@@ -62,7 +62,10 @@ export default function BookPage() {
     // funcao para devolver livro (API)
     const Devolver = async () => {
         try {
-            const response = await postRequestDevolve(id); // chama API pra devolver 
+            const response = await postRequestDevolve(id);
+
+            
+            // chama API pra devolver 
         } catch (error) {
             console.error(error);
         }
@@ -80,6 +83,7 @@ export default function BookPage() {
             setTimeout(() => {
                 setAlert1(false);
             }, 2000);
+
             Alugar();
         }
 
@@ -100,7 +104,9 @@ export default function BookPage() {
             setTimeout(() => {
                 setAlert2(false);
             }, 2000);
+
             Devolver();
+            setLivro({response});
         }
 
         else {

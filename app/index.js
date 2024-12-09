@@ -50,7 +50,7 @@ export default function App() {
               id={item.id}
               name={item.name}
               autor={item.autor}
-              quantidade={`Qtd: ${item.quantidade}`}
+              quantidade={item.quantidade}
             />
           ))
         }
