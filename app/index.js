@@ -9,6 +9,8 @@ export default function App() {
 
   const [livro, setLivro] = useState([]);
 
+
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,14 +27,14 @@ export default function App() {
   }, [])
 
 
-  
+
 
   return (
 
     <View style={styles.container}>
 
-      <View style={styles.header}>
-        <Text>
+      <View >
+        <Text style={styles.header}>
           BIBLIOTECA
         </Text>
       </View>
@@ -56,29 +58,29 @@ export default function App() {
 
       </ScrollView>
     </View>
+
+
   );
 
 }
+
+
 
 const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: 'silver',
+    backgroundColor: '#BDB76B',
     alignItems: 'left',
     justifyContent: 'top',
-  },
 
-  caixa: {
-    backgroundColor: "grey",
-    padding: 15,
-    borderRadius: 10,
+    shadowRadius: 10,
     shadowColor: '#000',
     shadowOpacity: 0.1,
-    shadowRadius: 10,
     elevation: 3,
-    marginVertical: 10
+    padding: 5,
   },
+
 
   cabeçalho: {
     justifyContent: 'flex-start',
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   },
 
   buttonContainer: {
-    backgroundColor: "red",
+    backgroundColor: "#556B2F",
     padding: 15,
     borderRadius: 10,
     shadowColor: '#000',
@@ -105,7 +107,21 @@ const styles = StyleSheet.create({
     marginVertical: 10
 
   },
-  
+
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginBottom: 2,
+    backgroundColor: '#556B2F',
+    textAlign: 'center',
+    shadowOpacity: 12,
+    color: 'white',
+    justifyContent: 'top',
+
+  },
 
 
 });

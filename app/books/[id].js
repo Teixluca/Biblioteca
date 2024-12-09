@@ -13,7 +13,10 @@ export default function BookPage() {
     const [clienteEmail, setEmail] = useState("");
 
     const [alert1, setAlert1] = useState(false);
+    const [estoqueMenor, setEstoqueMenor] = useState(false);
+
     const [alert2, setAlert2] = useState(false);
+    const [estoqueMaior, setEstoqueMaior] = useState(false);
 
     const { id } = useLocalSearchParams();
 
@@ -37,29 +40,34 @@ export default function BookPage() {
         fetchData();
 
     }, [id])
-
+    ////////////////////////////
 
 
 
     // funcao para alugar livro (API)
     const Alugar = async () => {
         try {
+
             const response = await postRequest(id); // chama API pra alugar
+
         } catch (error) {
+
             console.error(error);
         }
     };
+    ////////////////////////////
 
 
 
     // funcao para devolver livro (API)
     const Devolver = async () => {
         try {
-            const response = await postRequestDevolve(id); // chama API pra devolver            console.log("Livro alugado com sucesso:", response);
+            const response = await postRequestDevolve(id); // chama API pra devolver 
         } catch (error) {
             console.error(error);
         }
     };
+    ////////////////////////////
 
 
 
@@ -67,42 +75,80 @@ export default function BookPage() {
 
     const onMessage = () => {
 
-        if (Alugar()) {
-            setAlert2(true)
-            setTimeout(() => {
-                setAlert2(false);
-            }, 4000);
-        }
-        if (Devolver()) {
-
+        if (livro.quantidade <= livro.estoque && livro.quantidade > 0) {
             setAlert1(true)
             setTimeout(() => {
                 setAlert1(false);
-            }, 4000);
+            }, 2000);
+            Alugar();
+        }
+
+        else {
+
+            setEstoqueMenor(true)
+            setTimeout(() => {
+                setEstoqueMenor(false);
+            }, 2000);
         }
     }
 
+    // mensagem de quando devolve o livro
+    const onMessageDevolve = () => {
 
+        if (livro.quantidade < livro.estoque) {
+            setAlert2(true)
+            setTimeout(() => {
+                setAlert2(false);
+            }, 2000);
+            Devolver();
+        }
 
-    // acoes do botao de alugar
+        else {
 
-    const botaoAlugar = () => {
-
-        onMessage()
-        Alugar()
+            setEstoqueMaior(true)
+            setTimeout(() => {
+                setEstoqueMaior(false);
+            }, 2000);
+        }
     }
-
-
-    const botaoDevolver = () => {
-
-        onMessage()
-        Devolver()
-    }
-
+    ////////////////////////////
 
     return (
+
+
         <ScrollView>
+
             <View style={styles.container}>
+
+                <View >
+                    <Text style={styles.header}>
+                        {livro.name}
+                    </Text>
+                </View>
+
+
+
+                <View style={styles.card}>
+
+                    <Text style={styles.description}>Id: <Text style={styles.title}>{livro.id}</Text></Text>
+                    <Text style={styles.description}><Text style={styles.title}>{livro.name}</Text></Text>
+                    <Text style={styles.description}>Autor: <Text style={styles.title}>{livro.autor}</Text></Text>
+                    <Text style={styles.description}>Lançamento: <Text style={styles.title}>{livro.ano}</Text></Text>
+
+                    <Image
+                        source={{
+                            uri: `${livro.imagemUrl}`
+                        }}
+                        style={{ alignItems: 'center', width: 200, height: 300, borderRadius: 5, border: "black" }}
+                    />
+
+                    <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
+
+                </View>
+
+
+
+
 
                 <View style={styles.card}>
                     <TextInput
@@ -118,58 +164,46 @@ export default function BookPage() {
                         value={clienteEmail}
                         onChangeText={setEmail}
                     />
+
                     <Button
                         title='Alugar'
-                        color='blue'
+                        color='#556B2F'
 
-                        onPress={() => botaoAlugar()}
-
-
+                        onPress={() => onMessage()}
                     />
 
-                    {alert1 ? <Text style={styles.errorText}>
+                    {alert1 ? <Text style={styles.confirmText}>
                         Livro Alugado para {clienteNome}
                     </Text>
                         : <></>}
 
-
-
-
-
-                    <Button
-                        title='Devolver'
-                        color='lightblue'
-                        onPress={() => botaoDevolver()}
-                    // fata colocar a quantidade
-                    />
-
-                    {alert2 ? <Text style={styles.errorText}>
-                        Livro Devovido por {clienteNome}
+                    {estoqueMenor ? <Text style={styles.errorText}>
+                        LIVRO INDISPONIVEL
                     </Text>
                         : <></>}
 
+                    <Button
+                        title='Devolver'
+                        color='#BDB76B'
+                        borderColor='black'
 
+                        onPress={() => onMessageDevolve()}
 
-                </View>
-
-
-                <View style={styles.card}>
-
-                    <Text style={styles.description}>Id: <Text style={styles.title}>{livro.id}</Text></Text>
-                    <Text style={styles.description}><Text style={styles.title}>{livro.name}</Text></Text>
-                    <Text style={styles.description}>Autor: <Text style={styles.title}>{livro.autor}</Text></Text>
-                    <Text style={styles.description}>Lançamento: <Text style={styles.title}>{livro.ano}</Text></Text>
-
-                    <Image
-                        source={{
-                            uri: `${livro.imagemUrl}`
-                        }}
-                        style={{ width: 200, height: 300, borderRadius: 5, border: "black" }}
                     />
-                    <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
 
+                    {alert2 ? <Text style={styles.confirmText}>
+                        Livro Devolvido por {clienteNome}
+                    </Text>
+                        : <></>}
+
+                    {estoqueMaior ? <Text style={styles.errorText}>
+                        impossivel Devolver
+                    </Text>
+                        : <></>}
 
                 </View>
+
+
 
 
                 <View style={styles.botaoVoltar} >
@@ -189,6 +223,7 @@ export default function BookPage() {
 
 
             </View>
+
         </ScrollView>
 
 
@@ -199,9 +234,9 @@ export default function BookPage() {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 22,
-        padding: 24,
-        backgroundColor: '#eaeaea'
+        flex: 1,
+        padding: 20,
+        backgroundColor: '#BDB76B'
     },
 
     card: {
@@ -212,7 +247,9 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 5,
         elevation: 3,
-        marginVertical: 5
+        marginVertical: 5,
+
+        alignItems: 'center'
     },
 
     description: {
@@ -238,29 +275,48 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         width: 66,
         height: 30,
+        marginBottom: 100
     },
 
     label: {
         fontSize: 12,
         fontWeight: 'bold',
-        marginBottom: 8
+        marginBottom: 9
     },
     input: {
         borderWidth: 1,
-        borderColor: 'red',
-        borderRadius: 8,
-        padding: 12,
+        borderColor: 'green',
+        borderRadius: 6,
+        padding: 10,
         fontSize: 12,
-        marginBottom: 16
-    },
-    textArea: {
-        height: 150,
-        textAlignVertical: 'top'
+        marginBottom: 6,
+        width: 300
     },
 
+
     errorText: {
-        color: "darkgreen",
+        color: "red",
         fontSize: 12,
         fontStyle: "italic"
+    },
+    confirmText: {
+        color: "green",
+        fontSize: 12,
+        fontStyle: "italic"
+    },
+
+    header: {
+        flexDirection: 'row',
+
+
+        fontSize: 22,
+        fontWeight: 'bold',
+        backgroundColor: '#556B2F',
+        textAlign: 'center',
+
+        color: 'white',
+
+        borderBlockColor: 'black',
+        flex: 1,
     },
 })

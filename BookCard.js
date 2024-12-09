@@ -4,17 +4,24 @@ import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { router } from "expo-router";
 
-const BookCard = ({ id, name, autor, quantidade, status }) => {
-        
+
+const BookCard = ({ id, name, autor, quantidade }) => {
+
     return (
-            
-        
+
+
         <View style={styles.card}>
+
             <View style={styles.header}>
                 <Text style={styles.title}>
                     {name}
                 </Text>
-                <BookmarkCheck   color={'green'} size={32} />
+
+
+                {quantidade === 0 ? <BookmarkCheck color={'red'} size={32} />
+                    : <BookmarkCheck color={'green'} size={32} />}
+
+
             </View>
 
             <Text style={styles.description}>{autor}</Text>
@@ -26,24 +33,25 @@ const BookCard = ({ id, name, autor, quantidade, status }) => {
                     params: { id: id }
                 })
             )}>
-                <Text style={styles.button}> DETALHES</Text>
+                <Text style={styles.button}> DETALHES DO LIVRO</Text>
 
             </Pressable>
 
         </View>
     )
+
 }
 
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
-        padding: 12,
+        padding: 16,
         borderRadius: 10,
-        shadowColor: '#000',
+        shadowColor: 'black',
         shadowOpacity: 0.1,
         shadowRadius: 5,
-        elevation: 6,
-        marginVertical: 5
+        elevation: 19,
+        marginVertical: 9
     },
 
     header: {
@@ -54,9 +62,9 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        fontSize: 16,
+        fontSize: 22,
         fontWeight: 'bold',
-        color: '#333'
+        color: 'black'
     },
 
     status: {
@@ -73,14 +81,17 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#d33f49',
-        paddingVertical: 5,
+        backgroundColor: '#BDB76B',
+        paddingVertical: 9,
         padding: 1,
         borderRadius: 6,
         alignItems: 'center',
-        color: '#fff',
+        color: 'FFDEAD',
         fontSize: 12,
         fontWeight: 'bold',
+
+        alignContent: 'center',
+        width: 130
     },
 
     buttonText: {

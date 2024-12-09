@@ -1,6 +1,8 @@
 const BASE_URL = 'http://localhost:5214/api/Biblioteca'
 
 
+// chama API para mostrar todos os livros
+
 export const getRequest = async () => {
     try {
         // executa o comando
@@ -28,6 +30,8 @@ export const getRequest = async () => {
     }
 }
 
+
+// chama API para mostrar livro escolhido
 export const getRequestId = async (id) => {
     try {
         // executa o comando
@@ -56,6 +60,8 @@ export const getRequestId = async (id) => {
     }
 }
 
+
+// chama API para alugar
 export const postRequest = async (id) => {
     try {
         const response = await fetch(`${BASE_URL}/aluga/${id}`, {
@@ -78,6 +84,8 @@ export const postRequest = async (id) => {
     }
 };
 
+
+// chama API para devovler
 export const postRequestDevolve = async (id) => {
     try {
         const response = await fetch(`${BASE_URL}/devolve/${id}`, {
