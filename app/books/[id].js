@@ -11,6 +11,7 @@ export default function BookPage() {
 
     const [clienteNome, setNome] = useState("");
     const [clienteEmail, setEmail] = useState("");
+    const [dataNasc, setDataNasc] = useState("");
 
     const [alert1, setAlert1] = useState(false);
     const [estoqueMenor, setEstoqueMenor] = useState(false);
@@ -49,6 +50,8 @@ export default function BookPage() {
         try {
 
             const response = await postRequest(id); // chama API pra alugar
+            setLivro(response); //atualiza automatico a quantidad
+
 
         } catch (error) {
 
@@ -62,10 +65,10 @@ export default function BookPage() {
     // funcao para devolver livro (API)
     const Devolver = async () => {
         try {
-            const response = await postRequestDevolve(id);
+            const response = await postRequestDevolve(id);// chama API pra alugar
 
-            
-            // chama API pra devolver 
+            setLivro(response); //atualiza automatico a quantidade
+
         } catch (error) {
             console.error(error);
         }
@@ -78,13 +81,19 @@ export default function BookPage() {
 
     const onMessage = () => {
 
-        if (livro.quantidade <= livro.estoque && livro.quantidade > 0) {
+        if (livro.quantidade <= livro.estoque && livro.quantidade > 0 && clienteNome.length > 0) {
+
+
             setAlert1(true)
             setTimeout(() => {
                 setAlert1(false);
             }, 2000);
 
             Alugar();
+
+
+
+
         }
 
         else {
@@ -93,20 +102,22 @@ export default function BookPage() {
             setTimeout(() => {
                 setEstoqueMenor(false);
             }, 2000);
+
+
         }
     }
 
     // mensagem de quando devolve o livro
     const onMessageDevolve = () => {
 
-        if (livro.quantidade < livro.estoque) {
+        if (livro.quantidade < livro.estoque && clienteNome.length > 0) {
             setAlert2(true)
             setTimeout(() => {
                 setAlert2(false);
             }, 2000);
 
             Devolver();
-            setLivro({response});
+
         }
 
         else {
@@ -149,7 +160,9 @@ export default function BookPage() {
                     />
 
                     <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
-
+                    <Text style={styles.description}>Alugado para: <Text style={styles.title}>{clienteNome}</Text></Text>
+               
+               
                 </View>
 
 
@@ -171,10 +184,17 @@ export default function BookPage() {
                         onChangeText={setEmail}
                     />
 
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Data de nascimento'
+                        value={dataNasc}
+                        onChangeText={setDataNasc}
+                    />
+
                     <Button
                         title='Alugar'
                         color='#556B2F'
-
+                        
                         onPress={() => onMessage()}
                     />
 
@@ -184,7 +204,7 @@ export default function BookPage() {
                         : <></>}
 
                     {estoqueMenor ? <Text style={styles.errorText}>
-                        LIVRO INDISPONIVEL
+                        Preecha o nome ou verifique se o livro esta disponivel
                     </Text>
                         : <></>}
 
@@ -203,7 +223,10 @@ export default function BookPage() {
                         : <></>}
 
                     {estoqueMaior ? <Text style={styles.errorText}>
-                        impossivel Devolver
+                        
+                                Impossivel devolver 
+                        Insira o nome ou Verifique o estoque
+
                     </Text>
                         : <></>}
 
