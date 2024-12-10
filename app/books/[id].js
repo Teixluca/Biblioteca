@@ -4,7 +4,9 @@ import { useEffect, useState } from "react";
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { getRequestId, postRequest, postRequestDevolve } from "../../Api";
 import { useLocalSearchParams } from "expo-router/build/hooks";
-import {  Undo2 } from "lucide-react-native";
+import { Undo2 } from "lucide-react-native";
+import { postRequestUser } from "../../ApiUser";
+
 
 
 export default function BookPage() {
@@ -12,6 +14,10 @@ export default function BookPage() {
     const [clienteNome, setNome] = useState([]);
     const [clienteEmail, setEmail] = useState("");
     const [dataNasc, setDataNasc] = useState([""]);
+    const [task, setTask] = useState([]);
+    const [idLivro, setIdLivro] = useState([""]);
+
+
 
     const [alert1, setAlert1] = useState(false);
     const [estoqueMenor, setEstoqueMenor] = useState(false);
@@ -75,7 +81,21 @@ export default function BookPage() {
     };
     ////////////////////////////
 
+    // chamar usuario
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const resp = await getRequestuUser();
+                setLivro(resp)
 
+            } catch (ex) {
+                console.error(ex)
+            }
+        };
+
+        fetchData();
+
+    }, [id])
 
     // mensagem de quando aluga o livro
 
@@ -91,9 +111,13 @@ export default function BookPage() {
 
 
             Alugar();
+            const newTask = postRequestUser(clienteNome, clienteEmail, dataNasc, id);
 
-
-
+            setTask(newTask);
+            setNome("");
+            setEmail("");
+            setDataNasc("");
+            setIdLivro(Alugar.response);
 
         }
 
@@ -131,6 +155,9 @@ export default function BookPage() {
     }
     ////////////////////////////
 
+
+
+
     return (
 
 
@@ -154,120 +181,20 @@ export default function BookPage() {
                     )}>
                         <View style={styles.botaoVoltar}>
                             <Undo2 color='#556B2F' />
-                            
-                      
+
+
 
                         </View>
                     </TouchableOpacity >
 
 
-                    <Text style={styles.header}>
-                        {livro.name}
-                    </Text>
 
 
 
 
-
-                </View>
-
-
-                <View style={styles.card}>
-
-                    <Text style={styles.description}>Id: <Text style={styles.title}>{livro.id}</Text></Text>
-                    <Text style={styles.description}><Text style={styles.title}>{livro.name}</Text></Text>
-                    <Text style={styles.description}>Autor: <Text style={styles.title}>{livro.autor}</Text></Text>
-                    <Text style={styles.description}>Lançamento: <Text style={styles.title}>{livro.ano}</Text></Text>
-
-                    <Image
-                        source={{
-                            uri: `${livro.imagemUrl}`
-                        }}
-                        style={{ alignItems: 'center', width: 200, height: 300, borderRadius: 9, borderColor: "black", borderWidth: 1, shadowColor: 'black', shadowOpacity: 9, shadowRadius: 5, }}
-                    />
-
-                    <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
-
-                </View>
-
-
-
-
-
-                <View style={styles.card}>
-                    <View >
-                        <Text style={{ fontWeight: 'bold', height: 30, borderRadius: 5, color: "green" }}>
-                            Dados Usuario
-                        </Text>
-                    </View>
-                    
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Nome'
-                        value={clienteNome}
-                        onChangeText={setNome}
-                    />
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Email'
-                        value={clienteEmail}
-                        onChangeText={setEmail}
-                    />
-
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Data de nascimento'
-                        value={dataNasc}
-                        onChangeText={setDataNasc}
-                    />
-
-                    <Button
-                        title='Alugar'
-                        color='#556B2F'
-
-                        onPress={() => onMessage()}
-                    />
-
-                    {alert1 ? <Text style={styles.confirmText}>
-                        Livro Alugado para {clienteNome}
-                    </Text>
-                        : <></>}
-
-                    {estoqueMenor ? <Text style={styles.errorText}>
-                        Preecha o nome ou verifique se o livro esta disponivel
-                    </Text>
-                        : <></>}
-
-                    <Button
-                        title='Devolver'
-                        color='#BDB76B'
-
-                        onPress={() => onMessageDevolve()}
-
-                    />
-
-                    {alert2 ? <Text style={styles.confirmText}>
-                        Livro Devolvido por {clienteNome}
-                    </Text>
-                        : <></>}
-
-                    {estoqueMaior ? <Text style={styles.errorText}>
-
-                        Impossivel devolver
-                        Insira o nome ou Verifique o estoque
-
-                    </Text>
-                        : <></>}
-
-                </View>
-
-
-
-
-
-
-
+                <Text style={styles.header}>
+                    {livro.name}
+                </Text>
 
 
 
@@ -275,7 +202,110 @@ export default function BookPage() {
 
             </View>
 
-        </ScrollView>
+
+            <View style={styles.card}>
+
+                <Text style={styles.description}>Id: <Text style={styles.title}>{livro.id}</Text></Text>
+                <Text style={styles.description}><Text style={styles.title}>{livro.name}</Text></Text>
+                <Text style={styles.description}>Autor: <Text style={styles.title}>{livro.autor}</Text></Text>
+                <Text style={styles.description}>Lançamento: <Text style={styles.title}>{livro.ano}</Text></Text>
+
+                <Image
+                    source={{
+                        uri: `${livro.imagemUrl}`
+                    }}
+                    style={{ alignItems: 'center', width: 200, height: 300, borderRadius: 9, borderColor: "black", borderWidth: 1, shadowColor: 'black', shadowOpacity: 9, shadowRadius: 5, }}
+                />
+
+                <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
+
+            </View>
+
+
+
+
+
+            <View style={styles.card}>
+                <View >
+                    <Text style={{ fontWeight: 'bold', height: 30, borderRadius: 5, color: "green" }}>
+                        Dados Usuario
+                    </Text>
+                </View>
+
+                <TextInput
+                    style={styles.input}
+                    placeholder='Nome'
+                    value={clienteNome}
+                    onChangeText={setNome}
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder='Email'
+                    value={clienteEmail}
+                    onChangeText={setEmail}
+                />
+
+                <TextInput
+                    style={styles.input}
+                    placeholder='Data de nascimento'
+                    value={dataNasc}
+                    onChangeText={setDataNasc}
+                />
+
+                <Button
+                    title='Alugar'
+                    color='#556B2F'
+
+                    onPress={() => onMessage()}
+                />
+
+                {alert1 ? <Text style={styles.confirmText}>
+                    Livro Alugado com sucesso!
+                </Text>
+                    : <></>}
+
+                {estoqueMenor ? <Text style={styles.errorText}>
+                    Preecha o nome ou verifique se o livro esta disponivel
+                </Text>
+                    : <></>}
+
+                <Button
+                    title='Devolver'
+                    color='#BDB76B'
+
+                    onPress={() => onMessageDevolve()}
+
+                />
+
+                {alert2 ? <Text style={styles.confirmText}>
+                    Livro Devolvido com sucesso!
+                </Text>
+                    : <></>}
+
+                {estoqueMaior ? <Text style={styles.errorText}>
+
+                    Impossivel devolver. Insira o nome ou Verifique o estoque
+
+                </Text>
+                    : <></>}
+
+            </View>
+
+
+
+
+
+
+
+
+
+
+
+
+        </View>
+
+        </ScrollView >
 
 
 
@@ -288,7 +318,7 @@ export default function BookPage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 4,
+        padding: 9,
         backgroundColor: '#BDB76B'
     },
 

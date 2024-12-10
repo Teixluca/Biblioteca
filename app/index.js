@@ -5,6 +5,7 @@ import { StyleSheet, Text, Button, View, ScrollView, TouchableOpacity } from 're
 import { getRequest } from '../Api';
 import BookCard from '../BookCard';
 import { router } from 'expo-router';
+import { getRequestUser, getRequestuUser } from '../ApiUser';
 
 export default function App() {
 
@@ -25,6 +26,7 @@ export default function App() {
     fetchData();
 
   }, [])
+
 
 
 
