@@ -52,13 +52,13 @@ const BookCard = ({ id, name, autor, quantidade }) => {
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#fff',
-        padding: 16,
+        padding: 29,
         borderRadius: 10,
         shadowColor: 'black',
         shadowOpacity: 2,
         shadowRadius: 5,
         elevation: 2,
-        marginVertical: 10,
+        marginVertical: 5,
         flexDirection: 'column',
 
         borderColor: 'olive',
@@ -101,8 +101,15 @@ const styles = StyleSheet.create({
         fontSize: 12,
         fontWeight: 'bold',
 
+        borderColor: 'olive',
+        borderWidth: 1,
+
         alignContent: 'center',
-        width: 130
+        width: 130,
+
+        shadowColor: 'lightgrey',
+        shadowOpacity: 9,
+        shadowRadius: 5,
     },
 
     buttonText: {

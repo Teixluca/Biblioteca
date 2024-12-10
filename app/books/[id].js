@@ -3,8 +3,8 @@ import { router } from "expo-router"
 import { useEffect, useState } from "react";
 import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { getRequestId, postRequest, postRequestDevolve } from "../../Api";
-import { useLocalSearchParams, useSearchParams } from "expo-router/build/hooks";
-import { Bluetooth, CircleCheck } from "lucide-react-native";
+import { useLocalSearchParams } from "expo-router/build/hooks";
+import {  Undo2 } from "lucide-react-native";
 
 
 export default function BookPage() {
@@ -134,16 +134,42 @@ export default function BookPage() {
     return (
 
 
-        <ScrollView>
+        <ScrollView style={styles.container}>
 
-            <View style={styles.container}>
 
-                <View >
+
+
+            <View >
+
+
+                <View style={styles.headerconteiner}>
+
+
+                    <TouchableOpacity onPress={() => (
+
+                        router.push({
+                            pathname: "/",
+                        })
+
+                    )}>
+                        <View style={styles.botaoVoltar}>
+                            <Undo2 color='#556B2F' />
+                            
+                      
+
+                        </View>
+                    </TouchableOpacity >
+
+
                     <Text style={styles.header}>
                         {livro.name}
                     </Text>
-                </View>
 
+
+
+
+
+                </View>
 
 
                 <View style={styles.card}>
@@ -157,7 +183,7 @@ export default function BookPage() {
                         source={{
                             uri: `${livro.imagemUrl}`
                         }}
-                        style={{ alignItems: 'center', width: 200, height: 300, borderRadius: 5, border: "black" }}
+                        style={{ alignItems: 'center', width: 200, height: 300, borderRadius: 9, borderColor: "black", borderWidth: 1, shadowColor: 'black', shadowOpacity: 9, shadowRadius: 5, }}
                     />
 
                     <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
@@ -165,15 +191,16 @@ export default function BookPage() {
                 </View>
 
 
-                
+
 
 
                 <View style={styles.card}>
-                <View >
-                    <Text style={{ fontWeight: 'bold', height: 30, borderRadius: 5, color: "green" }}> 
-                        Dados Usuario
-                    </Text>
-                </View>
+                    <View >
+                        <Text style={{ fontWeight: 'bold', height: 30, borderRadius: 5, color: "green" }}>
+                            Dados Usuario
+                        </Text>
+                    </View>
+                    
                     <TextInput
                         style={styles.input}
                         placeholder='Nome'
@@ -194,7 +221,7 @@ export default function BookPage() {
                         value={dataNasc}
                         onChangeText={setDataNasc}
                     />
-  
+
                     <Button
                         title='Alugar'
                         color='#556B2F'
@@ -215,7 +242,6 @@ export default function BookPage() {
                     <Button
                         title='Devolver'
                         color='#BDB76B'
-                        borderColor='black'
 
                         onPress={() => onMessageDevolve()}
 
@@ -238,21 +264,12 @@ export default function BookPage() {
 
 
 
-              
 
 
-                    <TouchableOpacity onPress={() => (
 
-                        router.push({
-                            pathname: "/",
-                        })
 
-                    )}>
-                        <Text style={styles.botaoVoltar} > Voltar </Text>
-                
-                    </TouchableOpacity>
 
-      
+
 
 
 
@@ -271,7 +288,7 @@ export default function BookPage() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
+        padding: 4,
         backgroundColor: '#BDB76B'
     },
 
@@ -302,18 +319,6 @@ const styles = StyleSheet.create({
         color: '#333'
     },
 
-    botaoVoltar: {
-        fontSize: 17,
-        borderWidth: 2,
-        borderColor: 'green',
-        borderRadius: 8,
-        fontWeight: 'bold',
-        color: 'green',
-        backgroundColor: 'lightblue',
-        width: 66,
-        height: 30,
-        marginBottom: 100
-    },
 
     label: {
         fontSize: 12,
@@ -343,17 +348,34 @@ const styles = StyleSheet.create({
     },
 
     header: {
+
         flexDirection: 'row',
-
-
+        borderRadius: 6,
         fontSize: 22,
         fontWeight: 'bold',
         backgroundColor: '#556B2F',
         textAlign: 'center',
-
+        alignContent: 'center',
         color: 'white',
 
         borderBlockColor: 'black',
-        flex: 1,
+        flex: 3
     },
+
+    headerconteiner: {
+        flexDirection: 'row',
+        flex: 1,
+        textAlign: 'center',
+        alignContent: 'center',
+    },
+    botaoVoltar: {
+        flex: 1,
+        borderRadius: 6,
+        borderWidth: 2,
+        borderColor: 'green',
+        alignItems: 'center',
+        verticalAlign: 'bottom',
+        backgroundColor: 'lightgray'
+    }
+
 })

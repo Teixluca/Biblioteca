@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, Button, View, ScrollView } from 'react-native';
+import { StyleSheet, Text, Button, View, ScrollView, TouchableOpacity } from 'react-native';
 
 import { getRequest } from '../Api';
 import BookCard from '../BookCard';
+import { router } from 'expo-router';
 
 export default function App() {
 
@@ -38,8 +39,6 @@ export default function App() {
           BIBLIOTECA
         </Text>
       </View>
-
-
 
       <ScrollView>
 
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOpacity: 0.1,
     elevation: 3,
-    padding: 5,
+    padding: 6,
   },
 
 
