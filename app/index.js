@@ -10,7 +10,6 @@ export default function App() {
   const [livro, setLivro] = useState([]);
 
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,6 +24,7 @@ export default function App() {
     fetchData();
 
   }, [])
+
 
 
 

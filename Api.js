@@ -107,3 +107,41 @@ export const postRequestDevolve = async (id) => {
         throw error;
     }
 };
+
+export const postRequestAddLivro = async (title, autor, qtd, estoque, imagem) => {
+    try {
+
+
+        let myBody = {
+            id: 0,
+            name: title,
+            autor: autor,
+            quantidade: qtd,
+            estoque: estoque,
+            imagemUrl: imagem
+
+
+        }
+        const response = await fetch(BASE_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(myBody)
+        });
+
+
+        if (!response.ok) {
+            throw new Error("Post Failed !!!")
+        }
+
+
+        const textData = await response.text();
+        return JSON.stringify(textData);
+
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};

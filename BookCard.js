@@ -1,4 +1,4 @@
-import { BookmarkCheck } from "lucide-react-native";
+import { Bookmark, BookmarkCheck } from "lucide-react-native";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { createStaticNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -11,15 +11,21 @@ const BookCard = ({ id, name, autor, quantidade }) => {
 
 
         <View style={styles.card}>
+            
 
             <View style={styles.header}>
+              
+
+              
                 <Text style={styles.title}>
                     {name}
                 </Text>
 
 
                 {quantidade == 0 ?
-                 <BookmarkCheck color={'red'} size={32} />
+                 <Bookmark color={'red'} size={32} />
+
+               
                     : <BookmarkCheck color={'green'} size={32} />}
 
 
@@ -49,10 +55,14 @@ const styles = StyleSheet.create({
         padding: 16,
         borderRadius: 10,
         shadowColor: 'black',
-        shadowOpacity: 0.1,
+        shadowOpacity: 2,
         shadowRadius: 5,
-        elevation: 19,
-        marginVertical: 9
+        elevation: 2,
+        marginVertical: 10,
+        flexDirection: 'column',
+
+        borderColor: 'olive',
+        borderWidth: 1
     },
 
     header: {

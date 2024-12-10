@@ -1,7 +1,7 @@
 import { router } from "expo-router"
 
 import { useEffect, useState } from "react";
-import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native"
+import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import { getRequestId, postRequest, postRequestDevolve } from "../../Api";
 import { useLocalSearchParams, useSearchParams } from "expo-router/build/hooks";
 import { Bluetooth, CircleCheck } from "lucide-react-native";
@@ -9,9 +9,9 @@ import { Bluetooth, CircleCheck } from "lucide-react-native";
 
 export default function BookPage() {
 
-    const [clienteNome, setNome] = useState("");
+    const [clienteNome, setNome] = useState([]);
     const [clienteEmail, setEmail] = useState("");
-    const [dataNasc, setDataNasc] = useState("");
+    const [dataNasc, setDataNasc] = useState([""]);
 
     const [alert1, setAlert1] = useState(false);
     const [estoqueMenor, setEstoqueMenor] = useState(false);
@@ -89,6 +89,7 @@ export default function BookPage() {
                 setAlert1(false);
             }, 2000);
 
+
             Alugar();
 
 
@@ -160,19 +161,22 @@ export default function BookPage() {
                     />
 
                     <Text style={styles.description}>Quantidade: <Text style={styles.title}>{livro.quantidade}</Text></Text>
-                    <Text style={styles.description}>Alugado para: <Text style={styles.title}>{clienteNome}</Text></Text>
-               
-               
+
                 </View>
 
 
-
+                
 
 
                 <View style={styles.card}>
+                <View >
+                    <Text style={{ fontWeight: 'bold', height: 30, borderRadius: 5, color: "green" }}> 
+                        Dados Usuario
+                    </Text>
+                </View>
                     <TextInput
                         style={styles.input}
-                        placeholder='Nome completo'
+                        placeholder='Nome'
                         value={clienteNome}
                         onChangeText={setNome}
                     />
@@ -190,11 +194,11 @@ export default function BookPage() {
                         value={dataNasc}
                         onChangeText={setDataNasc}
                     />
-
+  
                     <Button
                         title='Alugar'
                         color='#556B2F'
-                        
+
                         onPress={() => onMessage()}
                     />
 
@@ -223,8 +227,8 @@ export default function BookPage() {
                         : <></>}
 
                     {estoqueMaior ? <Text style={styles.errorText}>
-                        
-                                Impossivel devolver 
+
+                        Impossivel devolver
                         Insira o nome ou Verifique o estoque
 
                     </Text>
@@ -234,10 +238,10 @@ export default function BookPage() {
 
 
 
+              
 
-                <View style={styles.botaoVoltar} >
 
-                    <Pressable onPress={() => (
+                    <TouchableOpacity onPress={() => (
 
                         router.push({
                             pathname: "/",
@@ -245,15 +249,18 @@ export default function BookPage() {
 
                     )}>
                         <Text style={styles.botaoVoltar} > Voltar </Text>
+                
+                    </TouchableOpacity>
 
-                    </Pressable>
+      
 
-                </View>
 
 
             </View>
 
         </ScrollView>
+
+
 
 
     )
@@ -297,7 +304,8 @@ const styles = StyleSheet.create({
 
     botaoVoltar: {
         fontSize: 17,
-        borderWidth: 1,
+        borderWidth: 2,
+        borderColor: 'green',
         borderRadius: 8,
         fontWeight: 'bold',
         color: 'green',
