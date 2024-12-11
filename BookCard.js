@@ -9,31 +9,24 @@ const BookCard = ({ id, name, autor, quantidade }) => {
 
     return (
 
-
+            // CARD TELA INICIAL CRTL+K+C para comentar no View
         <View style={styles.card}>
-            
+
 
             <View style={styles.header}>
-              
-
-              
                 <Text style={styles.title}>
                     {name}
                 </Text>
 
-
-                {quantidade == 0 ?
-                 <Bookmark color={'red'} size={32} />
-
-               
+                {quantidade == 0 ? <Bookmark color={'red'} size={32} />
                     : <BookmarkCheck color={'green'} size={32} />}
-
 
             </View>
 
             <Text style={styles.description}>{autor}</Text>
             <Text style={styles.description}>qtd: {quantidade}</Text>
 
+                
             <Pressable onPress={() => (
                 router.push({
                     pathname: "books/[id]",
