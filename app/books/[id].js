@@ -5,7 +5,7 @@ import { Button, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, Touc
 import { getRequestId, postRequest, postRequestDevolve } from "../../Api";
 import { useLocalSearchParams } from "expo-router/build/hooks";
 import { Undo2 } from "lucide-react-native";
-import { postRequestUser } from "../../ApiUser";
+import { getRequestUser, postRequestUser } from "../../ApiUser";
 
 
 
@@ -80,21 +80,6 @@ export default function BookPage() {
     };
     ////////////////////////////
 
-    // chamar usuario
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const resp = await getRequestuUser();
-                setLivro(resp)
-
-            } catch (ex) {
-                console.error(ex)
-            }
-        };
-
-        fetchData();
-
-    }, [id])
 
     // mensagem de quando aluga o livro
 
@@ -111,11 +96,7 @@ export default function BookPage() {
 
             Alugar();
 
-            const newTask = postRequestUser(clienteNome, clienteEmail, dataNasc, id);
-            setTask(newTask);
-            setNome("");
-            setEmail("");
-            setDataNasc("");
+           
             setIdLivro(Alugar.response);
 
         }
